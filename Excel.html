@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>excel</title>
+  <header>
+        <h1 class="lie">Рейхстаг</h1>
+       <nav class="first">
+            <ul class="second">
+                <li class="nav"><a href="Excel.html">Отношения</a></li>
+                <li class="nav"><a href="work.html">Должности</a></li>
+                <li class="nav"><a href="enemy.html">Враги народа</a></li>
+                <li class="nav"><a href="its.html">ИТС(УТС)</a></li>
+                <li class="nav"><a href="teacher.html">Учителя</a></li>
+                <li class="nav"><a href="priot.html">Приоритеты</a></li>
+                <li class="nav"><a href="me.html">Чего я достиг</a></li>
+                <li class="nav"><a href="para.html">Общ.параметры</a></li>
+            </ul>
+        </nav>
+    </header>
+  <title>Предварительный просмотр Excel</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    
+  </style>
+</head>
+<body>
+    <div class="flags-container">
+    <img src="рейх.png" alt="Английский">
+    <img src="ссср.png" alt="Французский">
+    <img src="рус.png" alt="Немецкий">
+    <img src="япония.png" alt="Русский">
+  </div>
+  <h1>Предварительный просмотр Excel-файла</h1>
+  <input type="file" id="fileInput" accept=".xlsx, .xls" />
+  <div id="excelData"></div>
+
+  <script>
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const html = XLSX.utils.sheet_to_html(worksheet);
+        document.getElementById('excelData').innerHTML = html;
+      };
+
+      reader.readAsArrayBuffer(file);
+    });
+  </script>
+</body>
+</html>
